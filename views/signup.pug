@@ -1,0 +1,20 @@
+extends layout
+
+block content
+    div.container
+        div.form-head SignUp
+        div.form
+            form#signup(action='http://localhost:1010/save', method='post')
+                label(for='username')  Username
+                input.form-control(type='email', name='username', placeholder='Email : abc@xyz.com', required='')
+                br
+                label(for='firstname')   First Name
+                input.form-control(type='text', name='firstname', placeholder='First Name', pattern='[A-Za-z]{3,}', required='')
+                br
+                label(for='lastname')  Last Name
+                input.form-control(type='text',name='lastname',placeholder='Last Name', pattern='[A-Za-z]{3,}',required='')
+                br
+                label(for='pass')  Password
+                input.form-control(type='password', name='pass', placeholder='Password : Hover here see the validation', title='Password should have minimum length as 6 and also must contain atleast 1 UpperCase,1LowerCase , 1 Number and 1 Special Character.', pattern='(?=.*\\d)(?=.*\\W)(?=.*[a-z])(?=.*[A-Z]).{6,}', required='')
+                br
+                button(type='submit') Register
