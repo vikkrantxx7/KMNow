@@ -37,6 +37,31 @@ router.get('/register',function(req,res){
     res.render('signup',{title:   'Register for Dashboard'});
 });
 
+router.get('/srops',(req,res) => {
+    console.log("Request for SROPS Received");
+    res.render('srops', {title:   'SROPS'});
+});
+
+router.get('/srdev',(req,res) => {
+    console.log("Request for SRDEV Received");
+    res.render('srdev', {title:   'SRDEV'});
+});
+
+router.get('/lansa',(req,res) => {
+    console.log("Request for LANSA Received");
+    res.render('lansa', {title:   'LANSA'});
+});
+
+router.get('/mdms',(req,res) => {
+    console.log("Request for MDMS Received");
+    res.render('mdms', {title:   'MDMS'});
+});
+
+router.get('/rds',(req,res) => {
+    console.log("Request for RDS Received");
+    res.render('rds', {title:   'RDS'});
+});
+
 router.post('/save',function(req,res){
     console.log("Request for Save Received");
     var username=req.body.username;
