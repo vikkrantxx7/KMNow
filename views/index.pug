@@ -1,5 +1,29 @@
 extends layout
 
+block stylesheets
+    link(rel='stylesheet', href='/stylesheets/index.css')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  div.container(style="position: relative")
+    h1(style="width: 80%; margin: 0")= title
+    span(style="width: 20%; text-align: center; cursor: pointer" onclick="displayBlock();") Login/Sign-Up
+    p Welcome to #{title}
+    div.container(style="position: absolute; top: 100px; left: 10%; z-index: 1; box-shadow: 0 0 100px 3px rgba(0, 0, 0, 0.3); padding: 2px; opacity: 0; display: none")
+        div.form-head SignUp
+        div.form
+            form#signup(action='http://localhost:1010/save', method='post')
+                label(for='username')  Username
+                input.form-control(type='email', name='username', placeholder='Email : abc@xyz.com', required='')
+                br
+                label(for='firstname')   First Name
+                input.form-control(type='text', name='firstname', placeholder='First Name', pattern='[A-Za-z]{3,}', required='')
+                br
+                label(for='lastname')  Last Name
+                input.form-control(type='text',name='lastname',placeholder='Last Name', pattern='[A-Za-z]{3,}',required='')
+                br
+                label(for='pass')  Password
+                input.form-control(type='password', name='pass', placeholder='Password : Hover here see the validation', title='Password should have minimum length as 6 and also must contain atleast 1 UpperCase,1LowerCase , 1 Number and 1 Special Character.', pattern='(?=.*\\d)(?=.*\\W)(?=.*[a-z])(?=.*[A-Z]).{6,}', required='')
+                br
+                button(type='submit') Register
+  script
+    include ../public/javascripts/uimodule.js

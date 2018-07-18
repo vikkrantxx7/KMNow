@@ -5,37 +5,37 @@ var path = require('path');
 var session = require('express-session');
 
 
-var userName;
-var firstName;
-var lastName;
-var errormessage;
+// var userName;
+// var firstName;
+// var lastName;
+// var errormessage;
 
-exports.names = function(data){
-    console.log("data is :");
-    console.log(data);
-    userName  	= data[0].username;
-    firstName 	= data[0].firstname;
-    lastName  	= data[0].lastName;
+// exports.names = function(data){
+//     console.log("data is :");
+//     console.log(data);
+//     userName  	= data[0].username;
+//     firstName 	= data[0].firstname;
+//     lastName  	= data[0].lastName;
 
-}
+// }
 
-router.get('/',function(req,res) {
+router.get('/',(req,res) => {
     console.log("Request for Dashboard Received");
     res.render('index', {title:   'Dashboard'});
 
 });
 
-router.post('/login',function(req,res){
-    var username=req.body.username;
-    var pass=req.body.pass;
-    dbmodule.authenticateUser(username,pass,res);
+// router.post('/login',function(req,res){
+//     var username=req.body.username;
+//     var pass=req.body.pass;
+//     dbmodule.authenticateUser(username,pass,res);
 
-});
+// });
 
-router.get('/register',function(req,res){
-    console.log("Request for Register Received");
-    res.render('signup',{title:   'Register for Dashboard'});
-});
+// router.get('/register',function(req,res){
+//     console.log("Request for Register Received");
+//     res.render('signup',{title:   'Register for Dashboard'});
+// });
 
 router.get('/srops',(req,res) => {
     console.log("Request for SROPS Received");
@@ -62,7 +62,7 @@ router.get('/rds',(req,res) => {
     res.render('rds', {title:   'RDS'});
 });
 
-router.post('/save',function(req,res){
+router.post('/save',(req,res) => {
     console.log("Request for Save Received");
     var username=req.body.username;
     var firstname=req.body.firstname;
