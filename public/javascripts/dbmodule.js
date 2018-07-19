@@ -1,40 +1,58 @@
 var mongojs = require('mongojs');
-var db = mongojs('db', ['DashboardUsers','UserDetails']);
+var db = mongojs('db', ['DashboardUsers']);
 var server = require('../../routes/route.js');
 var path = require('path');
+var session = require('express-session');
 
-db.AdventureUsers.createIndex({username:1},{unique:true});
-
-
-exports.saveUser = function(username,firstname,lastname,pass,res) {  //saving User to dB open 
-
-	console.log('Saving user to mongo');
-	//console.log('DOB is coming as'+dob);
-	//console.log('DOB is going to mongo as'+inputDOB);
-	
-	db.DashboardUsers.save({"username":username,"firstname":firstname,"lastName":lastname,"pass":pass}, function(err, saved) {
-	if( err || !saved ) {
-		console.log("User not saved");
-		console.log(err);
-		res.render('error', { message: 'Sorry  ' + username + ' ,is already registered with us !', linked:'http://localhost:1234/register' });
-		//res.send('<p style ="font:1.2em trebuchet MS;color:SteelBlue;"> Sorry  ' + username + ' ,this username is already registered at E-Wallet , Kindly try to <a href="http://localhost:1010/register"> register </a> with a different one !!</p>');
-		
-	}
-  	else {
-		console.log("User saved");
-		res.redirect('/');
-	}
-}); //save Query end 
+exports.saveUser = (username,firstname,lastname,pass,res) => {  //saving User to dB open 
+	db.DashboardUsers.findOne({"username":username}, (err, user) => {
+		console.log("Finding users...");
+		if(err) {
+			console.log("error is " + err);
+		} else if(!user) {
+			db.DashboardUsers.save({"username":username,"firstname":firstname,"lastName":lastname,"pass":pass}, function(err, saved) {
+				if( err || !saved ) {
+					console.log("User not saved");
+					console.log(err);
+					// res.render('error', { message: 'Sorry  ' + username + ' ,is already registered with us !', linked:'http://localhost:1010/register' });
+					//res.send('<p style ="font:1.2em trebuchet MS;color:SteelBlue;"> Sorry  ' + username + ' ,this username is already registered at E-Wallet , Kindly try to <a href="http://localhost:1010/register"> register </a> with a different one !!</p>');		
+				}
+				else {
+					console.log("User saved");
+					res.redirect('/');
+				}
+			}); //save Query end }
+		} else {
+			console.log("User already exists");
+			res.render('error', { message: 'Sorry  ' + username + ' ,is already registered with us !'});
+		}
+	});
 }//saving User to dB end
 
-exports.authenticateUser = function(username,pass,res) {
-	db.DashboardUsers.find({"username":username,"pass":pass},  function(err, DashboardUsers) {
-	console.log("user is " + DashboardUsers);
-	console.log("error is " + err);
+// exports.saveUser = function(username,firstname,lastname,pass,res) {  //saving User to dB open 
+// 	console.log('Saving user to mongo');
+// 			db.DashboardUsers.save({"username":username,"firstname":firstname,"lastName":lastname,"pass":pass}, function(err, saved) {
+// 				if( err || !saved ) {
+// 					console.log("User not saved");
+// 					console.log(err);
+// 					// res.render('error', { message: 'Sorry  ' + username + ' ,is already registered with us !', linked:'http://localhost:1010/register' });
+// 					//res.send('<p style ="font:1.2em trebuchet MS;color:SteelBlue;"> Sorry  ' + username + ' ,this username is already registered at E-Wallet , Kindly try to <a href="http://localhost:1010/register"> register </a> with a different one !!</p>');		
+// 				}
+// 				else {
+// 					console.log("User saved");
+// 					res.redirect('/');
+// 				}
+// 			}); //save Query end }
+// }//saving User to dB end
+
+exports.authenticateUser = (username,pass,res) => {
+	db.DashboardUsers.find({"username":username,"pass":pass},  (err, users) => {
+	console.log("user is " + users);
 	
-  	if(err || (DashboardUsers.length==0)){
+  	if(err || (users.length==0)){		  
+		console.log("error is " + err);
    		console.log("..Not authorized user");
-   		res.render('error', { message: 'Sorry Invalid credentials !', linked:'http://localhost:1234/' });
+   		res.render('error', { message: 'Sorry Invalid credentials !', linked:'http://localhost:1010/' });
 	}
   	else{
     	console.log("Authorized user");
@@ -45,18 +63,18 @@ exports.authenticateUser = function(username,pass,res) {
 	}); // findUser Qquery end
 } //authenticateUser function end 
 
-exports.retrieveUser = function(username,res){
-	db.DashboardUsers.find({"username":username},function(err, DashboardUsers) {
-		console.log(DashboardUsers);
-		console.log(DashboardUsers[0].firstname);
-	console.log("user is " + DashboardUsers);
-	  	if(err || (DashboardUsers.length==0)){
+exports.retrieveUser = (username,res) => {
+	db.DashboardUsers.find({"username":username},(err, users) => {
+		console.log(users);
+		console.log(users[0].firstname);
+	console.log("user is " + users);
+	  	if(err || (users.length==0)){
    		console.log("Error in finding the username ");
    		res.send(err);
 	}
   	else{
     	console.log("Found in DB");
-		server.names(DashboardUsers);
+		server.names(users);
  	}
 	}); // findUser Query for My Profile Page end 
 } //retrieveUser function end 

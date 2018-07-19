@@ -5,19 +5,19 @@ var path = require('path');
 var session = require('express-session');
 
 
-// var userName;
-// var firstName;
-// var lastName;
+var userName;
+var firstName;
+var lastName;
 // var errormessage;
 
-// exports.names = function(data){
-//     console.log("data is :");
-//     console.log(data);
-//     userName  	= data[0].username;
-//     firstName 	= data[0].firstname;
-//     lastName  	= data[0].lastName;
+exports.names = function(data){
+    console.log("data is :");
+    console.log(data);
+    userName  	= data[0].username;
+    firstName 	= data[0].firstname;
+    lastName  	= data[0].lastName;
 
-// }
+}
 
 router.get('/',(req,res) => {
     console.log("Request for Dashboard Received");
