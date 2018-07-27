@@ -1,29 +1,34 @@
 extends layout
 
 block stylesheets
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/index.css')
 
 block content
-  div.container(style="position: relative")
-    h1(style="width: 80%; margin: 0")= title
-    span(style="width: 20%; text-align: center; cursor: pointer" onclick="displayBlock();") Login/Sign-Up
+  div.custom-container(style="position: relative")
+    h1(style="width: 85%; margin: 0")= title
+    span.label.label-info(style="width: 15%; text-align: center; cursor: pointer; line-height:2; font-size:100%" onclick="displayBlock();") Login/Sign-Up
     p Welcome to #{title}
-    div.container(style="position: absolute; top: 100px; left: 10%; z-index: 1; box-shadow: 0 0 100px 3px rgba(0, 0, 0, 0.3); padding: 2px; opacity: 0; display: none")
-        div.form-head SignUp
-        div.form
-            form#signup(action='http://localhost:1010/save', method='post')
-                label(for='username')  Username
-                input.form-control(type='email', name='username', placeholder='Email : abc@xyz.com', required='')
-                br
-                label(for='firstname')   First Name
-                input.form-control(type='text', name='firstname', placeholder='First Name', pattern='[A-Za-z]{3,}', required='')
-                br
-                label(for='lastname')  Last Name
-                input.form-control(type='text',name='lastname',placeholder='Last Name', pattern='[A-Za-z]{3,}',required='')
-                br
-                label(for='pass')  Password
-                input.form-control(type='password', name='pass', placeholder='Password : Hover here see the validation', title='Password should have minimum length as 6 and also must contain atleast 1 UpperCase,1LowerCase , 1 Number and 1 Special Character.', pattern='(?=.*\\d)(?=.*\\W)(?=.*[a-z])(?=.*[A-Z]).{6,}', required='')
-                br
-                button(type='submit') Register
+    div.container(style="position: absolute; top: 100px; left:5%; right:5%; z-index: 1; box-shadow: 0 0 100px 3px rgba(0, 0, 0, 0.3); padding: 2px; opacity: 0; display: none")
+        div.label.label-info(style="line-height:2; display:block; font-size:100%") SignUp
+        div.container(style="padding-top:5px; padding-bottom:5px")
+            form#signup.form-horizontal(action='http://localhost:1010/save', method='post', role='form')
+                div.form-group
+                    label.control-label.col-sm-offset-1.col-sm-3(for='username')  Username
+                    div.col-sm-5
+                        input.form-control(type='email', name='username', id='username', placeholder='Email : abc@xyz.com', required='')
+                div.form-group
+                    label.control-label.col-sm-offset-1.col-sm-3(for='firstname')   First Name
+                    div.col-sm-5
+                        input.form-control(type='text', name='firstname', id='firstname', placeholder='First Name', pattern='[A-Za-z]{3,}', required='')
+                div.form-group
+                    label.control-label.col-sm-offset-1.col-sm-3(for='lastname')  Last Name
+                    div.col-sm-5
+                        input.form-control(type='text',name='lastname', id='lastname', placeholder='Last Name', pattern='[A-Za-z]{3,}',required='')
+                div.form-group
+                    label.control-label.col-sm-offset-1.col-sm-3(for='pass')  Password
+                    div.col-sm-5
+                        input.form-control(type='password', name='pass', id='pass', placeholder='Password : Hover here see the validation', title='Password should have minimum length as 6 and also must contain atleast 1 UpperCase,1LowerCase , 1 Number and 1 Special Character.', pattern='(?=.*\\d)(?=.*\\W)(?=.*[a-z])(?=.*[A-Z]).{6,}', required='')
+                button.col-sm-offset-4(type='submit') Register
   script
     include ../public/javascripts/uimodule.js
